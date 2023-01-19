@@ -7,7 +7,7 @@ import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract } = useContract('0x1A8Cb9742304226358139C9799dbe6DBB0a7Fd95');
+  const { contract } = useContract('0xB95E713194eB3e058b5b917a21aD94b313b58b4b');
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
 
   const address = useAddress();
@@ -32,6 +32,7 @@ export const StateContextProvider = ({ children }) => {
 
   const getCampaigns = async () => {
     const campaigns = await contract.call('getCampaigns');
+    
 
     const parsedCampaings = campaigns.map((campaign, i) => ({
       owner: campaign.owner,
@@ -43,6 +44,7 @@ export const StateContextProvider = ({ children }) => {
       image: campaign.image,
       pId: i
     }));
+
 
     return parsedCampaings;
   }
