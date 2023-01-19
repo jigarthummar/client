@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useStateContext } from '../context';
+
 import { logo, sun } from '../assets';
 import { navlinks } from '../constants';
 
@@ -15,6 +17,7 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
 )
 
 const Sidebar = () => {
+  const { connect, address, disconnect } = useStateContext();
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('dashboard');
 
@@ -35,6 +38,10 @@ const Sidebar = () => {
                 if(!link.disabled) {
                   setIsActive(link.name);
                   navigate(link.link);
+                }
+                if(link.name === 'logout'){
+                  if(address) disconnect()
+                  else connect();
                 }
               }}
             />
